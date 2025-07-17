@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anurag Mallepalli | Cybersecurity Portfolio</title>
+  <title>Anurag Mallepalli | SOC Analyst Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-black text-white">
@@ -11,7 +11,7 @@
   <header class="bg-gray-900 shadow p-6">
     <div class="max-w-4xl mx-auto">
       <h1 class="text-3xl font-bold">Anurag Mallepalli</h1>
-      <p class="text-lg text-gray-300">Aspiring SOC Analyst | Threat Detection & Incident Response Enthusaist</p>
+      <p class="text-lg text-gray-300">SOC Analyst | Threat Detection & Incident Response</p>
     </div>
   </header>
 
@@ -21,10 +21,29 @@
     <!-- Projects -->
     <section>
       <h2 class="text-2xl font-semibold mb-4">Projects</h2>
-      <ul class="list-disc ml-6">
-        <li><strong>Secure Web Authentication System:</strong> Python, OAuth 2.0, SAML, OpenSSL, Wireshark</li>
-        <li><strong>SIEM with Azure Sentinel:</strong> Deployed log sources, created detection rules, KQL queries</li>
-      </ul>
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xl font-bold">SIEM with Azure Sentinel</h3>
+          <p class="mb-2">A complete step-by-step implementation of SIEM capabilities using Azure Sentinel.</p>
+          <details class="bg-gray-800 p-4 rounded">
+            <summary class="cursor-pointer text-blue-400 underline">View Step-by-Step Guide</summary>
+            <ol class="list-decimal list-inside mt-2 space-y-2">
+              <li><strong>Provision Azure Resources:</strong> Create a Log Analytics workspace and onboard Azure Sentinel.</li>
+              <li><strong>Connect Data Sources:</strong> Integrate Office 365, Azure AD, and Windows Security logs via Data Connectors.</li>
+              <li><strong>Develop KQL Queries:</strong> Write and save queries to detect failed logins, phishing, and lateral movement.</li>
+              <li><strong>Create Analytics Rules:</strong> Schedule KQL-based detections, map to MITRE ATT&CK, and configure incident creation.</li>
+              <li><strong>Design Dashboards:</strong> Build interactive workbooks for real-time monitoring of incidents and threat trends.</li>
+              <li><strong>Automate Response:</strong> Use Azure Logic Apps to trigger email alerts, lock accounts, and open tickets.</li>
+              <li><strong>Test & Tune:</strong> Simulate events, validate alerts, and adjust thresholds to minimize false positives.</li>
+              <li><strong>Document & Measure:</strong> Record steps in Confluence and track metrics like detection-to-response time.</li>
+            </ol>
+          </details>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold">Secure Web Authentication System</h3>
+          <p><strong>Technologies:</strong> Python, OAuth 2.0, SAML, OpenSSL, Wireshark</p>
+        </div>
+      </div>
     </section>
 
     <!-- Writeups -->
@@ -40,16 +59,16 @@
     <section>
       <h2 class="text-2xl font-semibold mb-4">Certifications</h2>
       <ul class="list-disc ml-6">
-        <li>CompTIA Cybersecurity Analyst+ (CySA+), Dec 2024</li>
-        <li>eLearn Junior Penetration Tester (eJPT), Aug 2024</li>
-        <li>CompTIA Security+, Jan 2022</li>
+        <li>CompTIA Cybersecurity Analyst+ (CySA+), Dec 2024</li>
+        <li>eLearn Junior Penetration Tester (eJPT), Aug 2024</li>
+        <li>CompTIA Security+, Jan 2022</li>
       </ul>
     </section>
 
     <!-- Resume -->
     <section>
       <h2 class="text-2xl font-semibold mb-4">Resume</h2>
-      <p>You can view or download my full resume <a href="Anurag_Mallepalli_Resume.pdf" class="text-blue-400 underline">here</a>.</p>
+      <p>Download my full resume <a href="Anurag_Mallepalli_Resume.pdf" class="text-blue-400 underline">here</a>.</p>
     </section>
 
     <!-- Contact -->
@@ -57,7 +76,7 @@
       <h2 class="text-2xl font-semibold mb-4">Contact</h2>
       <ul>
         <li>Email: <a href="mailto:amallepalli2@gmail.com" class="text-blue-400 underline">amallepalli2@gmail.com</a></li>
-        <li><a href="https://github.com/K1uee" class="text-blue-400 underline">GitHub</a></li>
+        <li><a href="https://github.com/anuragmallepalli" class="text-blue-400 underline">GitHub</a></li>
         <li><a href="https://linkedin.com/in/anuragmallepalli" class="text-blue-400 underline">LinkedIn</a></li>
       </ul>
     </section>
@@ -67,5 +86,7 @@
     &copy; 2025 Anurag Mallepalli. All rights reserved.
   </footer>
 </body>
+</html>
+
 </html>
 
