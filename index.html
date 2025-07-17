@@ -21,27 +21,62 @@
     <!-- Projects -->
     <section>
       <h2 class="text-2xl font-semibold mb-4">Projects</h2>
-      <div class="space-y-6">
+      <div class="space-y-8">
         <div>
           <h3 class="text-xl font-bold">SIEM with Azure Sentinel</h3>
-          <p class="mb-2">A complete step-by-step implementation of SIEM capabilities using Azure Sentinel.</p>
-          <details class="bg-gray-800 p-4 rounded">
-            <summary class="cursor-pointer text-blue-400 underline">View Step-by-Step Guide</summary>
-            <ol class="list-decimal list-inside mt-2 space-y-2">
-              <li><strong>Provision Azure Resources:</strong> Create a Log Analytics workspace and onboard Azure Sentinel.</li>
-              <li><strong>Connect Data Sources:</strong> Integrate Office 365, Azure AD, and Windows Security logs via Data Connectors.</li>
-              <li><strong>Develop KQL Queries:</strong> Write and save queries to detect failed logins, phishing, and lateral movement.</li>
-              <li><strong>Create Analytics Rules:</strong> Schedule KQL-based detections, map to MITRE ATT&CK, and configure incident creation.</li>
-              <li><strong>Design Dashboards:</strong> Build interactive workbooks for real-time monitoring of incidents and threat trends.</li>
-              <li><strong>Automate Response:</strong> Use Azure Logic Apps to trigger email alerts, lock accounts, and open tickets.</li>
-              <li><strong>Test & Tune:</strong> Simulate events, validate alerts, and adjust thresholds to minimize false positives.</li>
-              <li><strong>Document & Measure:</strong> Record steps in Confluence and track metrics like detection-to-response time.</li>
-            </ol>
-          </details>
+          <p class="mb-4">A complete step-by-step implementation of SIEM capabilities using Azure Sentinel.</p>
+          <ol class="list-decimal list-inside ml-6 space-y-6">
+            <li>
+              <strong>Provision Azure Resources</strong>
+              <p>In the Azure Portal, create a Resource Group named <code>SOC-RG</code>. Then set up a Log Analytics workspace (<code>SOC-LAW</code>) in your desired region. Ensure you enable diagnostic settings.</p>
+              <img src="images/step1-provision-workspace.png" alt="Screenshot of Azure Portal creating Log Analytics workspace" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Enable Azure Sentinel</strong>
+              <p>Navigate to Azure Sentinel, click <em>Add</em>, and select your <code>SOC-LAW</code> workspace. Confirm onboarding and wait until Sentinel is active.</p>
+              <img src="images/step2-enable-sentinel.png" alt="Screenshot of onboarding Azure Sentinel" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Connect Data Sources</strong>
+              <p>Under <em>Configuration &rarr; Data connectors</em>, integrate Office 365, Azure AD, and Windows Security Events. Follow each connector's wizard—grant permissions or install the Monitoring Agent on VMs.</p>
+              <img src="images/step3-connect-data.png" alt="Screenshot of Azure Sentinel data connectors list" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Develop KQL Queries</strong>
+              <p>Open <em>Logs</em> and use the Kusto query editor. Example for failed logins:</p>
+              <pre class="bg-gray-800 p-3 rounded overflow-auto"><code>SecurityEvent
+| where EventID == 4625
+| project TimeGenerated, Computer, Account, FailureReason
+| sort by TimeGenerated desc
+</code></pre>
+              <img src="images/step4-kql-editor.png" alt="Screenshot of KQL query in Azure Sentinel Logs" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Create Analytics Rules</strong>
+              <p>Go to <em>Analytics &rarr; + Create &rarr; Scheduled query rule</em>. Set your rule name, severity, and paste KQL. Schedule it to run every 5 minutes with a 15-minute look-back. Enable incident creation.</p>
+              <img src="images/step5-analytics-rule.png" alt="Screenshot of creating analytics rule" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Design Dashboards</strong>
+              <p>Under <em>Workbooks</em>, build a SOC Overview. Add charts for incident trends, top affected hosts, and ATT&CK tactic distribution. Save as a shared workbook.</p>
+              <img src="images/step6-workbook.png" alt="Screenshot of Azure Sentinel workbook dashboard" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Automate Response</strong>
+              <p>Create a Logic App playbook. Use the <em>When an Azure Sentinel alert is created</em> trigger, then add actions like sending email, locking a user, or opening a ServiceNow ticket.</p>
+              <img src="images/step7-logic-app.png" alt="Screenshot of Logic Apps designer with Sentinel trigger" class="mt-2 rounded shadow-lg">
+            </li>
+            <li>
+              <strong>Test, Document & Measure</strong>
+              <p>Simulate events (e.g., failed logins), verify incident creation and playbook execution. Document steps in Confluence and record metrics: incident count, response time, playbook success rate.</p>
+              <img src="images/step8-test-measure.png" alt="Screenshot of Confluence documentation and metrics dashboard" class="mt-2 rounded shadow-lg">
+            </li>
+          </ol>
         </div>
+
         <div>
           <h3 class="text-xl font-bold">Secure Web Authentication System</h3>
-          <p><strong>Technologies:</strong> Python, OAuth 2.0, SAML, OpenSSL, Wireshark</p>
+          <p><strong>Technologies:</strong> Python, OAuth 2.0, SAML, OpenSSL, Wireshark</p>
         </div>
       </div>
     </section>
@@ -50,8 +85,8 @@
     <section>
       <h2 class="text-2xl font-semibold mb-4">Writeups</h2>
       <ul class="list-disc ml-6">
-        <li><a href="#" class="text-blue-400 underline">Investigating Event ID 4625: Failed Login Analysis</a></li>
-        <li><a href="#" class="text-blue-400 underline">TryHackMe Blue Primer Walkthrough</a></li>
+        <li><a href="#" class="text-blue-400 underline">Investigating Event ID 4625: Failed Login Analysis</a></li>
+        <li><a href="#" class="text-blue-400 underline">TryHackMe Blue Primer Walkthrough</a></li>
       </ul>
     </section>
 
@@ -59,8 +94,8 @@
     <section>
       <h2 class="text-2xl font-semibold mb-4">Certifications</h2>
       <ul class="list-disc ml-6">
-        <li>CompTIA Cybersecurity Analyst+ (CySA+), Dec 2024</li>
-        <li>eLearn Junior Penetration Tester (eJPT), Aug 2024</li>
+        <li>CompTIA Cybersecurity Analyst+ (CySA+), Dec 2024</li>
+        <li>eLearn Junior Penetration Tester (eJPT), Aug 2024</li>
         <li>CompTIA Security+, Jan 2022</li>
       </ul>
     </section>
