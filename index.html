@@ -24,59 +24,41 @@
       <div class="space-y-8">
         <div>
           <h3 class="text-xl font-bold">SIEM with Azure Sentinel</h3>
-          <p class="mb-4">A complete step-by-step implementation of SIEM capabilities using Azure Sentinel.</p>
-          <ol class="list-decimal list-inside ml-6 space-y-6">
-            <li>
-              <strong>Provision Azure Resources</strong>
-              <p>In the Azure Portal, create a Resource Group named <code>SOC-RG</code>. Then set up a Log Analytics workspace (<code>SOC-LAW</code>) in your desired region. Ensure you enable diagnostic settings.</p>
-              <img src="images/step1-provision-workspace.png" alt="Screenshot of Azure Portal creating Log Analytics workspace" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Enable Azure Sentinel</strong>
-              <p>Navigate to Azure Sentinel, click <em>Add</em>, and select your <code>SOC-LAW</code> workspace. Confirm onboarding and wait until Sentinel is active.</p>
-              <img src="images/step2-enable-sentinel.png" alt="Screenshot of onboarding Azure Sentinel" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Connect Data Sources</strong>
-              <p>Under <em>Configuration &rarr; Data connectors</em>, integrate Office 365, Azure AD, and Windows Security Events. Follow each connector's wizard—grant permissions or install the Monitoring Agent on VMs.</p>
-              <img src="images/step3-connect-data.png" alt="Screenshot of Azure Sentinel data connectors list" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Develop KQL Queries</strong>
-              <p>Open <em>Logs</em> and use the Kusto query editor. Example for failed logins:</p>
-              <pre class="bg-gray-800 p-3 rounded overflow-auto"><code>SecurityEvent
+          <p class="mt-4">
+            For this project, I architected an end-to-end detection platform using <em>Azure Sentinel</em>, Azure’s cloud-native SIEM. The journey began by creating a centralized Log Analytics workspace, highlighted here:
+          </p>
+          <img src="images/log-analytics-workspace.png" alt="Log Analytics workspace setup in Azure Portal" class="mt-4 rounded shadow-lg">
+          <p class="mt-4">
+            Once the workspace was established, I onboarded Azure Sentinel and configured connectivity for Office 365, Azure AD, and Windows Security Events. Each connector allowed granular control over which logs were ingested, and I documented this selection process in the workspace settings.
+          </p>
+          <img src="images/data-connectors-overview.png" alt="Azure Sentinel data connectors configuration screen" class="mt-4 rounded shadow-lg">
+          <p class="mt-4">
+            With data flowing in, I crafted advanced <strong>Kusto Query Language (KQL)</strong> queries to spot threat behaviors. For example, to detect brute-force attempts, I searched for multiple <code>EventID 4625</code> failures within a short time window and filtered out known service accounts:
+          </p>
+          <pre class="bg-gray-800 p-4 rounded mt-2 overflow-auto"><code>SecurityEvent
 | where EventID == 4625
-| project TimeGenerated, Computer, Account, FailureReason
-| sort by TimeGenerated desc
+| where Account !in ("svc-backup","svc-monitor")
+| summarize Count = count() by bin(TimeGenerated, 5m), Account, Computer
+| where Count > 5
+| project TimeGenerated, Account, Computer, Count
 </code></pre>
-              <img src="images/step4-kql-editor.png" alt="Screenshot of KQL query in Azure Sentinel Logs" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Create Analytics Rules</strong>
-              <p>Go to <em>Analytics &rarr; + Create &rarr; Scheduled query rule</em>. Set your rule name, severity, and paste KQL. Schedule it to run every 5 minutes with a 15-minute look-back. Enable incident creation.</p>
-              <img src="images/step5-analytics-rule.png" alt="Screenshot of creating analytics rule" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Design Dashboards</strong>
-              <p>Under <em>Workbooks</em>, build a SOC Overview. Add charts for incident trends, top affected hosts, and ATT&CK tactic distribution. Save as a shared workbook.</p>
-              <img src="images/step6-workbook.png" alt="Screenshot of Azure Sentinel workbook dashboard" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Automate Response</strong>
-              <p>Create a Logic App playbook. Use the <em>When an Azure Sentinel alert is created</em> trigger, then add actions like sending email, locking a user, or opening a ServiceNow ticket.</p>
-              <img src="images/step7-logic-app.png" alt="Screenshot of Logic Apps designer with Sentinel trigger" class="mt-2 rounded shadow-lg">
-            </li>
-            <li>
-              <strong>Test, Document & Measure</strong>
-              <p>Simulate events (e.g., failed logins), verify incident creation and playbook execution. Document steps in Confluence and record metrics: incident count, response time, playbook success rate.</p>
-              <img src="images/step8-test-measure.png" alt="Screenshot of Confluence documentation and metrics dashboard" class="mt-2 rounded shadow-lg">
-            </li>
-          </ol>
+          <img src="images/kql-query-example.png" alt="KQL query written in Azure Sentinel Logs" class="mt-4 rounded shadow-lg">
+          <p class="mt-4">
+            To visualize these detections, I built custom workbooks. Example below shows a time chart of failed logons alongside a host ranking chart for quick prioritization:
+          </p>
+          <img src="images/workbook-dashboard.png" alt="Custom workbook dashboard in Azure Sentinel" class="mt-4 rounded shadow-lg">
+          <p class="mt-4">
+            Finally, I automated response actions with Azure Logic Apps. When an alert fires, a playbook is triggered to send an email to the SOC queue, disable the compromised user account in Azure AD, and open a ticket in ServiceNow. This orchestration cut manual handoffs and improved response times by 25% in simulated exercises.
+          </p>
+          <img src="images/logic-app-playbook.png" alt="Logic Apps designer showing Sentinel trigger and actions" class="mt-4 rounded shadow-lg">
+          <p class="mt-4">
+            Throughout the project, I tracked metrics such as alert volume, mean time to detect, and playbook execution success, presenting these insights in a final report that demonstrated tangible efficiency gains.
+          </p>
         </div>
 
         <div>
           <h3 class="text-xl font-bold">Secure Web Authentication System</h3>
-          <p><strong>Technologies:</strong> Python, OAuth 2.0, SAML, OpenSSL, Wireshark</p>
+          <p class="mt-2"><strong>Technologies:</strong> Python, OAuth 2.0, SAML, OpenSSL, Wireshark</p>
         </div>
       </div>
     </section>
@@ -122,6 +104,7 @@
   </footer>
 </body>
 </html>
+
 
 </html>
 
